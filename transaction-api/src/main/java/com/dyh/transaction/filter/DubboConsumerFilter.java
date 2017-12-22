@@ -28,7 +28,6 @@ public class DubboConsumerFilter implements Filter{
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        System.out.println("DubboConsumerFilter....... interface:" + invoker.getInterface().getSimpleName() + ",method:" + invocation.getMethodName());
         Class interfaceClass = invoker.getInterface();
         String methodName = invocation.getMethodName();
 
@@ -128,7 +127,6 @@ public class DubboConsumerFilter implements Filter{
 
                 if (transactionProcess.getId() != null) {
                     try {
-                        System.out.println("globalTransactionProcessId:" + transactionProcess.getId() + "success:" + success + "");
                         globalTransactionProcessService.update(transactionProcess.getId(), result == null ? "" : JSONObject.toJSONString(result), status);
                     } catch (Exception e) {
                         e.printStackTrace();

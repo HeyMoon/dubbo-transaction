@@ -23,7 +23,6 @@ public class DubboProviderFilter implements Filter{
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        System.out.println("DubboProviderFilter....... interface:" + invoker.getInterface().getSimpleName() + ",method:" + invocation.getMethodName());
         Class interfaceClass = invoker.getInterface();
         String methodName = invocation.getMethodName();
 
@@ -82,7 +81,6 @@ public class DubboProviderFilter implements Filter{
         }
 
         if (globalTransactionService != null && globalTransaction != null && context != null){
-            System.out.println("globalTransactionId:" + globalTransaction.getId() + ",currentTransactionSequence:" + context.getCurrentTransactionSequence() + "success:" + success);
             globalTransactionService.update(globalTransaction.getId(), context.getCurrentTransactionSequence(), success ? GlobalTransactionsStatusEnum.Success : GlobalTransactionsStatusEnum.Fail);
         }
 
