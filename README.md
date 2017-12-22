@@ -2,6 +2,7 @@
 
 使用方法：
 
+### 1. 使用transaction的项目的配置 
 在需要使用最终一致性约束的项目中引入：
 
 ````
@@ -31,6 +32,7 @@ dubboConsumerFilter=com.dyh.transaction.filter.DubboConsumerFilter
 ````
 
 
+### 2. transaction项目的配置
 在`transaction`的pom文件里引入需要使用最终一致性事务的jar,同时在dubbo配置文件里加入以下配置：
 
 ````
