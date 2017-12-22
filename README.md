@@ -25,12 +25,12 @@ interface SomeService{
 interface AnotherService{
 
     @GlobalTransactionalProcess
-    Response doSomething();
+    Response innerDoSomething();
     
     /**
     *  doSomething 的回滚方法
     **/
-    Response doSomething_rollback();
+    Response innerDoSomething_rollback();
     
 }
 ````
