@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyh.transaction.dao.mapper.GlobalTransactionMapper">
+  <resultMap id="BaseResultMap" type="com.dyh.transaction.dao.model.GlobalTransaction">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="status" jdbcType="SMALLINT" property="status" javaType="com.dyh.transaction.enums.GlobalTransactionsStatusEnum"/>
+    <result column="curr_sequence" jdbcType="INTEGER" property="currSequence" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, status, curr_sequence, created_at, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from global_transaction
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from global_transaction
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.dyh.transaction.dao.model.GlobalTransaction" useGeneratedKeys="true">
+    insert into global_transaction (status, curr_sequence, created_at, 
+      updated_at)
+    values (#{status,jdbcType=SMALLINT}, #{currSequence,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.dyh.transaction.dao.model.GlobalTransaction" useGeneratedKeys="true">
+    insert into global_transaction
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="status != null">
+        status,
+      </if>
+      <if test="currSequence != null">
+        curr_sequence,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="currSequence != null">
+        #{currSequence,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dyh.transaction.dao.model.GlobalTransaction">
+    update global_transaction
+    <set>
+      <if test="status != null">
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="currSequence != null">
+        curr_sequence = #{currSequence,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findFailedRecords" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from global_transaction
+    where status = 3 or status = 5
+  </select>
+
+  <select id="findSuccessWithFailedProcessGlobals" resultMap="BaseResultMap">
+    select g.* from
+    global_transaction g
+    INNER JOIN
+    global_transaction_process p ON g.id = p.transaction_id
+    where g.status=2 and (p.status=3 or p.status=4) GROUP BY g.id
+  </select>
+</mapper>

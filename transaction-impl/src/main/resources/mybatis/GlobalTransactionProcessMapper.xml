@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyh.transaction.dao.mapper.GlobalTransactionProcessMapper">
+  <resultMap id="BaseResultMap" type="com.dyh.transaction.dao.model.GlobalTransactionProcess">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="transaction_id" jdbcType="INTEGER" property="transactionId" />
+    <result column="transaction_sequence" jdbcType="INTEGER" property="transactionSequence" />
+    <result column="status" jdbcType="SMALLINT" property="status" javaType="com.dyh.transaction.enums.GlobalTransactionProcessStatusEnum"/>
+    <result column="expected_status" jdbcType="SMALLINT" property="expectedStatus" javaType="com.dyh.transaction.enums.GlobalTransactionProcessExpectedStatusEnum"/>
+    <result column="service_name" jdbcType="VARCHAR" property="serviceName" />
+    <result column="version_name" jdbcType="VARCHAR" property="versionName" />
+    <result column="method_name" jdbcType="VARCHAR" property="methodName" />
+    <result column="rollback_method_name" jdbcType="VARCHAR" property="rollbackMethodName" />
+    <result column="retry_time_count" jdbcType="INTEGER" property="retryTimeCount" />
+    <result column="next_retry_time" jdbcType="TIMESTAMP" property="nextRetryTime" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="request_json" jdbcType="LONGVARCHAR" property="requestJson" />
+    <result column="response_json" jdbcType="LONGVARCHAR" property="responseJson" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, transaction_id, transaction_sequence, status, expected_status, service_name, 
+    version_name, method_name, rollback_method_name, retry_time_count, next_retry_time, 
+    created_at, updated_at,request_json, response_json
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from global_transaction_process
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from global_transaction_process
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.dyh.transaction.dao.model.GlobalTransactionProcess" useGeneratedKeys="true">
+    insert into global_transaction_process (transaction_id, transaction_sequence, 
+      status, expected_status, service_name, 
+      version_name, method_name, rollback_method_name, 
+      retry_time_count, next_retry_time, created_at, 
+      updated_at, request_json, response_json
+      )
+    values (#{transactionId,jdbcType=INTEGER}, #{transactionSequence,jdbcType=INTEGER}, 
+      #{status,jdbcType=SMALLINT}, #{expectedStatus,jdbcType=SMALLINT}, #{serviceName,jdbcType=VARCHAR}, 
+      #{versionName,jdbcType=VARCHAR}, #{methodName,jdbcType=VARCHAR}, #{rollbackMethodName,jdbcType=VARCHAR}, 
+      #{retryTimeCount,jdbcType=INTEGER}, #{nextRetryTime,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{requestJson,jdbcType=LONGVARCHAR}, #{responseJson,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.dyh.transaction.dao.model.GlobalTransactionProcess" useGeneratedKeys="true">
+    insert into global_transaction_process
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transactionId != null">
+        transaction_id,
+      </if>
+      <if test="transactionSequence != null">
+        transaction_sequence,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="expectedStatus != null">
+        expected_status,
+      </if>
+      <if test="serviceName != null">
+        service_name,
+      </if>
+      <if test="versionName != null">
+        version_name,
+      </if>
+      <if test="methodName != null">
+        method_name,
+      </if>
+      <if test="rollbackMethodName != null">
+        rollback_method_name,
+      </if>
+      <if test="retryTimeCount != null">
+        retry_time_count,
+      </if>
+      <if test="nextRetryTime != null">
+        next_retry_time,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="requestJson != null">
+        request_json,
+      </if>
+      <if test="responseJson != null">
+        response_json,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transactionId != null">
+        #{transactionId,jdbcType=INTEGER},
+      </if>
+      <if test="transactionSequence != null">
+        #{transactionSequence,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="expectedStatus != null">
+        #{expectedStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="serviceName != null">
+        #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="versionName != null">
+        #{versionName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="rollbackMethodName != null">
+        #{rollbackMethodName,jdbcType=VARCHAR},
+      </if>
+      <if test="retryTimeCount != null">
+        #{retryTimeCount,jdbcType=INTEGER},
+      </if>
+      <if test="nextRetryTime != null">
+        #{nextRetryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestJson != null">
+        #{requestJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="responseJson != null">
+        #{responseJson,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dyh.transaction.dao.model.GlobalTransactionProcess">
+    update global_transaction_process
+    <set>
+      <if test="transactionId != null">
+        transaction_id = #{transactionId,jdbcType=INTEGER},
+      </if>
+      <if test="transactionSequence != null">
+        transaction_sequence = #{transactionSequence,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="expectedStatus != null">
+        expected_status = #{expectedStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="serviceName != null">
+        service_name = #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="versionName != null">
+        version_name = #{versionName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        method_name = #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="rollbackMethodName != null">
+        rollback_method_name = #{rollbackMethodName,jdbcType=VARCHAR},
+      </if>
+      <if test="retryTimeCount != null">
+        retry_time_count = #{retryTimeCount,jdbcType=INTEGER},
+      </if>
+      <if test="nextRetryTime != null">
+        next_retry_time = #{nextRetryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestJson != null">
+        request_json = #{requestJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="responseJson != null">
+        response_json = #{responseJson,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findSuccessProcess" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from global_transaction_process
+    WHERE transaction_id= #{transactionId,jdbcType=INTEGER}
+    and status=2 or status=4
+  </select>
+
+  <select id="findFailedProcess" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from global_transaction_process
+    WHERE transaction_id= #{transactionId,jdbcType=INTEGER}
+    and (status=3 or status=4)
+    order by transaction_sequence asc
+  </select>
+
+</mapper>
