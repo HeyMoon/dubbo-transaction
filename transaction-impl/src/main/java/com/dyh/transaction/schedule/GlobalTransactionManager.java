@@ -1,6 +1,7 @@
 package com.dyh.transaction.schedule;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dyh.transaction.aop.DistributedLock;
 import com.dyh.transaction.constant.Constants;
 import com.dyh.transaction.dao.mapper.GlobalTransactionMapper;
 import com.dyh.transaction.dao.mapper.GlobalTransactionProcessMapper;
@@ -42,7 +43,9 @@ public class GlobalTransactionManager {
 
     @Scheduled(cron = "0 0/1 * * * ?")
     @Transactional(rollbackFor = Exception.class)
+    @DistributedLock
     public void execute(){
+
         LOGGER.info("--- 事务管理器开始 ---");
 
         /**
