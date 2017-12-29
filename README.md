@@ -108,3 +108,11 @@ dubboConsumerFilter=com.dyh.transaction.filter.DubboConsumerFilter
 ````
 <dubbo:reference interface="com.dyh.leaf.doc.api.ISomeService2" id="someService2" check="false"/>
 ````
+
+
+### 6.Spring ComponentScan
+在项目中增加Spring ComponentScan
+
+````
+@ComponentScan(basePackages = {"com.dyh.transaction"})
+````
